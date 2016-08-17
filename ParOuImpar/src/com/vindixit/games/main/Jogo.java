@@ -37,7 +37,7 @@ public class Jogo {
 	private static void simularPartidas(int n, Jogador jogador1, Jogador jogador2) {
 		for (int i = 1; i <= n; i++) {
 			
-			System.out.println("***************");
+			System.out.println("******");
 			System.out.println("Teste " + i);
 			
 			informarJogo(jogador1);
@@ -164,4 +164,3 @@ public class Jogo {
 		return n;
 	}
 
-}
