@@ -99,7 +99,7 @@ public class Jogo {
 		}
 
 	}
-
+	
 	private static void exibirResultado(int somaLancamentos, int resto) {
 		System.out.println("Resultado: "+somaLancamentos+", que é um número "+(resto == 0?" PAR.":" ÍMPAR."));
 	}
@@ -109,6 +109,8 @@ public class Jogo {
 		System.out.println("Jogador 2: "+jogador2.getNome() +" jogou "+jogo2+".");
 	}
 
+
+	
 	private static Jogador informarJogador(int id) {
 		String nome = null;
 		while (true) {
