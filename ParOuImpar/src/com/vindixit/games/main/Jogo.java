@@ -8,6 +8,8 @@ import com.vindixit.games.model.Jogador;
 public class Jogo {
 
 	public static Scanner sc;
+	private static int[] JogosJogadorUm;
+	private static int[] JogosJogadorDois;
 
 	public static void main(String[] args) {
 
@@ -24,24 +26,49 @@ public class Jogo {
 				System.out.println("Estou saindo.");
 				break;
 			}
-			
+		
+			JogosJogadorUm = new int[n];
+			JogosJogadorDois = new int[n];
+					
 			Jogador jogador1 = informarJogador(1);
 			Jogador jogador2 = informarJogador(2);
 			
-			simularPartidas(n, jogador1, jogador2);
+			for (int i = 0; i < n; i++)
+			{
+				int jogo;
+				//jogador1
+				System.out.println(jogador1.getNome()+",por favor, informe o número do seu jogo");
+				jogo = sc.nextInt();
+				if(jogo>5){
+					throw new Exception("Somente valores entre 0 e 5 serão possíveis.");
+			}
+				JogosJogadorUm[i] = jogo;
+				//jogador2
+				System.out.println(jogador2.getNome()+",por favor, informe o número do seu jogo");
+				jogo = sc.nextInt();
+				if(jogo>5){
+					throw new Exception("Somente valores entre 0 e 5 serão possíveis.");				
+			}
+				JogosJogadorDois[i] = jogo;
+			}
 			
+			simularPartidas(n, jogador1, jogador2);
 		}
+	
+	
 		sc.close();
-	}
+		
+		}  
 
+		
 	private static void simularPartidas(int n, Jogador jogador1, Jogador jogador2) {
 		for (int i = 1; i <= n; i++) {
 			
 			System.out.println("******");
 			System.out.println("Teste " + i);
 			
-			informarJogo(jogador1);
-			informarJogo(jogador2);
+			informarJogo(jogador1, JogosJogadorUm[i-1]);
+			informarJogo(jogador2, JogosJogadorDois[i-1]);
 
 			boolean resultadoPar = calcularResultado(jogador1,jogador2, false);
 			if (resultadoPar) {
@@ -53,28 +80,10 @@ public class Jogo {
 		}
 	}
 
-	private static void informarJogo(Jogador jogador) {
-		int jogo = 0;
-		while (true) {
-			try {
-				System.out.println(jogador.getNome()+", por favor, informe o número do seu jogo:");
-				jogo = sc.nextInt();
-				if(jogo>5){
-					throw new Exception("Somente valores entre 0 e 5 serão possíveis.");
-				}
-				jogador.setJogo(jogo);
-			} catch(InputMismatchException ex){
-				String message = "Por favor, informe somente números.";
-				System.err.println(message);
-				sc.next();
-				continue;
-			} catch (Exception e) {
-				System.err.println(e.getMessage());
-				continue;
-			}
-			break;
-		}
+	private static void informarJogo(Jogador jogador, int valor) {
+		jogador.setJogo(valor);
 	}
+	
 
 	private static boolean calcularResultado(Jogador jogador1, Jogador jogador2, boolean ehSorteio) {
 
@@ -163,4 +172,6 @@ public class Jogo {
 		System.out.println("O número de partidas será " + n);
 		return n;
 	}
+		}
+		
 
