@@ -11,7 +11,7 @@ public class Jogo {
 	private static int[] JogosJogadorUm;
 	private static int[] JogosJogadorDois;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
 		// Classe responsável por manipular e ler o texto que é informado na
 		// Console.
@@ -54,7 +54,6 @@ public class Jogo {
 			
 			simularPartidas(n, jogador1, jogador2);
 		}
-	
 	
 		sc.close();
 		
