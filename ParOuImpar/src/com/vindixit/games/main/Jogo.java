@@ -1,10 +1,22 @@
 package com.vindixit.games.main;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import com.vindixit.games.model.Jogador;
-
+/**
+ * Classe responsável por cadastrar os jogadores, estabelecer a quantidade de jogos, 
+ * registrar as jogadas e exibir os resultados ao final. 
+ * TODO Olá IZABEL
+ * Queria sugerir como reflexão:
+ * 1 - A classe Jogo poderia se limitar a consultar uma Súmula, e nesta súmula, 
+ * poderiam estar contidos todos os lançamentos de cada Jogador. 
+ * Pensar em criar essa classe POJO (coloquei isso de propósito 
+ * para que busque conhecimento).
+ * 2 - A classe Jogador poderia manter o histórico junto a ele, ou seja, 
+ * trocar o atributo (field) lancamento por um array de tipo primitivo (qual?).    
+ * @author Masaru 
+ * @since 19/08/2016 
+ */
 public class Jogo {
 
 	public static Scanner sc;
