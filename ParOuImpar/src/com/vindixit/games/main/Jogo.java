@@ -143,7 +143,9 @@ public class Jogo {
 		while (true) {
 			try {
 				// Texto solicitando ao usuário informar o numero de partidas.
+				System.out.println("==========");
 				System.out.println("Informe o número de partidas:");
+				System.out.println("==========");
 				// Preencher o numero de partidas na variavel da classe Jogo.
 				n = sc.nextInt();
 			} catch (Exception ex) {
