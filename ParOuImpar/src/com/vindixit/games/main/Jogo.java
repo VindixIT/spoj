@@ -3,134 +3,92 @@ package com.vindixit.games.main;
 import java.util.Scanner;
 
 import com.vindixit.games.model.Jogador;
+import com.vindixit.games.model.Partida;
+import com.vindixit.games.model.Sumula;
+
 /**
- * Classe responsável por cadastrar os jogadores, estabelecer a quantidade de jogos, 
- * registrar as jogadas e exibir os resultados ao final. 
- * TODO Olá IZABEL
- * Queria sugerir como reflexão:
- * 1 - A classe Jogo poderia se limitar a consultar uma Súmula, e nesta súmula, 
- * poderiam estar contidos todos os lançamentos de cada Jogador. 
- * Pensar em criar essa classe POJO (coloquei isso de propósito 
- * para que busque conhecimento).
- * 2 - A classe Jogador poderia manter o histórico junto a ele, ou seja, 
- * trocar o atributo (field) lancamento por um array de tipo primitivo (qual?).    
- * @author Masaru 
- * @since 19/08/2016 
+ * Classe responsável por cadastrar os jogadores, estabelecer a quantidade de
+ * jogos, registrar as jogadas e exibir os resultados ao final. 
+ * 
+ * @author Masaru
+ * @since 24/08/2016
  */
 public class Jogo {
 
 	public static Scanner sc;
-	private static int[] JogosJogadorUm;
-	private static int[] JogosJogadorDois;
 
 	public static void main(String[] args) throws Exception {
 
-		// Classe responsável por manipular e ler o texto que é informado na
-		// Console.
+		Sumula sumula = null;
 
 		while (true) {
-			
+
 			sc = new Scanner(System.in);
-			
-			int n = informarNPartidas();
-			
-			if (n == 0) {
+
+			int n = 0;
+
+			if (0 == (n = informarNumeroDePartidas())) {
 				System.out.println("Estou saindo.");
 				break;
 			}
-		
-			JogosJogadorUm = new int[n];
-			JogosJogadorDois = new int[n];
-					
-			Jogador jogador1 = informarJogador(1);
-			Jogador jogador2 = informarJogador(2);
-			
-			for (int i = 0; i < n; i++)
-			{
-				int jogo;
-				//jogador1
-				System.out.println(jogador1.getNome()+",por favor, informe o número do seu jogo");
-				jogo = sc.nextInt();
-				if(jogo>5){
-					throw new Exception("Somente valores entre 0 e 5 serão possíveis.");
-			}
-				JogosJogadorUm[i] = jogo;
-				//jogador2
-				System.out.println(jogador2.getNome()+",por favor, informe o número do seu jogo");
-				jogo = sc.nextInt();
-				if(jogo>5){
-					throw new Exception("Somente valores entre 0 e 5 serão possíveis.");				
-			}
-				JogosJogadorDois[i] = jogo;
-			}
-			
-			simularPartidas(n, jogador1, jogador2);
+
+			Jogador[] jogadores = informarJogadores(2);
+
+			sumula = new Sumula(n);
+
+			jogar(jogadores, sumula);
+
+			System.out.println(sumula.publicar());
 		}
-	
+
 		sc.close();
-		
-		}  
 
-		
-	private static void simularPartidas(int n, Jogador jogador1, Jogador jogador2) {
-		for (int i = 1; i <= n; i++) {
-			
-			System.out.println("******");
-			System.out.println("Teste " + i);
-			
-			informarJogo(jogador1, JogosJogadorUm[i-1]);
-			informarJogo(jogador2, JogosJogadorDois[i-1]);
+	}
 
-			boolean resultadoPar = calcularResultado(jogador1,jogador2, false);
-			if (resultadoPar) {
-				System.out.println("O vencedor eh " + jogador1 + ".");
-			} else {
-				System.out.println("O vencedor eh " + jogador2 + ".");
+	private static void jogar(Jogador[] jogadores, Sumula sumula) throws Exception {
+
+		for (int i = 0; i < sumula.getQtdPartidas(); i++) {
+
+			int lancamento = 0;
+			int somaLancamentos = 0;
+			Partida partida = new Partida(jogadores);
+			System.out.println("......");
+			System.out.println("PARTIDA "+(i+1));
+
+			for (int j = 0; j < 2; j++) {
+				
+				Jogador jogador = jogadores[j];
+				
+				System.out.println(jogador.getNome() + ", por favor, informe o número correspondente ao seu jogo: ");
+
+				// Pede para informar o seu lançamento.
+				lancamento = sc.nextInt();
+				if (lancamento > 5) {
+					System.err.println("Somente valores entre 0 e 5 serão possíveis.");
+					sc.next();
+				}
+				
+				partida.registrar(lancamento, jogador);
+				
+				somaLancamentos += lancamento;
+				
 			}
-			System.out.println(" ");
+			// Resto da divisão por 2 (dois). O primeiro jogador é sempre PAR.
+			partida.setSomaLancamentos(somaLancamentos);
+			
+			sumula.registrar(i, partida);
 		}
 	}
-
-	private static void informarJogo(Jogador jogador, int valor) {
-		jogador.setJogo(valor);
-	}
 	
-
-	private static boolean calcularResultado(Jogador jogador1, Jogador jogador2, boolean ehSorteio) {
-
-		int jogo1 = jogador1.jogar(ehSorteio);
-		int jogo2 = jogador2.jogar(ehSorteio);
-		
-		exibirParticipantes(jogador1, jogador2, jogo1, jogo2);
-		
-		int somaLancamentos = jogo1 + jogo2;
-		
-		int resto = somaLancamentos % 2;
-		
-		exibirResultado(somaLancamentos, resto);
-
-		// Resto da divisão por 2 (dois).
-		if (resto == 0) {
-			// Par
-			return true;
-		} else {
-			// Ímpar
-			return false;
+	private static Jogador[] informarJogadores(int numero) {
+		Jogador[] jogadores = new Jogador[numero];
+		for (int i = 0; i < numero; i++) {
+			Jogador jogador = informarJogador(1);
+			jogadores[i] = jogador;
 		}
-
-	}
-	
-	private static void exibirResultado(int somaLancamentos, int resto) {
-		System.out.println("Resultado: "+somaLancamentos+", que é um número "+(resto == 0?" PAR.":" ÍMPAR."));
+		return jogadores;
 	}
 
-	private static void exibirParticipantes(Jogador jogador1, Jogador jogador2, int jogo1, int jogo2) {
-		System.out.println("Jogador 1: "+jogador1.getNome() +" jogou "+jogo1+".");
-		System.out.println("Jogador 2: "+jogador2.getNome() +" jogou "+jogo2+".");
-	}
-
-
-	
 	private static Jogador informarJogador(int id) {
 		String nome = null;
 		while (true) {
@@ -147,11 +105,6 @@ public class Jogo {
 				}
 			} catch (Exception ex) {
 				System.err.println(ex.getMessage());
-				/*
-				 * When a scanner throws an InputMismatchException, the scanner
-				 * will not pass the token that caused the exception, so that it
-				 * may be retrieved or skipped via some other method.
-				 */
 				sc.next();
 				continue;
 			}
@@ -160,7 +113,7 @@ public class Jogo {
 		return new Jogador(id, nome);
 	}
 
-	private static int informarNPartidas() {
+	private static int informarNumeroDePartidas() {
 		int n = 0;
 		while (true) {
 			try {
@@ -170,11 +123,6 @@ public class Jogo {
 				n = sc.nextInt();
 			} catch (Exception ex) {
 				System.err.println("Tipo de dado errado. Por favor, informe um número inteiro.");
-				/*
-				 * When a scanner throws an InputMismatchException, the scanner
-				 * will not pass the token that caused the exception, so that it
-				 * may be retrieved or skipped via some other method.
-				 */
 				sc.next();
 				continue;
 			}
@@ -183,6 +131,4 @@ public class Jogo {
 		System.out.println("O número de partidas será " + n);
 		return n;
 	}
-		}
-		
-
+}
