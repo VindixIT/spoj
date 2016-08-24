@@ -69,7 +69,6 @@ public class Jogo {
 				}
 				
 				partida.registrar(lancamento, jogador);
-				
 				somaLancamentos += lancamento;
 				
 			}
@@ -83,7 +82,7 @@ public class Jogo {
 	private static Jogador[] informarJogadores(int numero) {
 		Jogador[] jogadores = new Jogador[numero];
 		for (int i = 0; i < numero; i++) {
-			Jogador jogador = informarJogador(1);
+			Jogador jogador = informarJogador(i+1);
 			jogadores[i] = jogador;
 		}
 		return jogadores;

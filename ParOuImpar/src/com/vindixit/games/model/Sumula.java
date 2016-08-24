@@ -24,13 +24,13 @@ public class Sumula {
 	public String publicar() {
 		String str = "";
 		for (int i = 0; i < partidas.length; i++) {
-			cabecalho(i);
+			cabecalho(i+1);
 			Partida partida = partidas[i];
 			if(partida.isTerminada()){
 				Jogador[] jogadores = partida.getJogadores();
 				int[] lancamentos = partida.getLancamentos();
 				for (int j = 0; j < jogadores.length; j++) {
-					str += "Jogador "+j+": "+jogadores[j].getNome() +" jogou "+lancamentos[j]+".\n";
+					str += "Jogador "+(j+1)+": "+jogadores[j].getNome() +" jogou "+lancamentos[j]+".\n";
 				}
 				int total = partida.getSomaLancamentos();
 				str += "Resultado: "+total+", que é um número "+partida.getResultado()+"\n";
