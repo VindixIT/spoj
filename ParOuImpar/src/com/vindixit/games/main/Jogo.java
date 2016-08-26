@@ -25,8 +25,9 @@ public class Jogo {
 
 			sc = new Scanner(System.in);
 
+				
 			int n = 0;
-
+			
 			if (0 == (n = informarNumeroDePartidas())) {
 				System.out.println("Estou saindo.");
 				break;
@@ -44,6 +45,13 @@ public class Jogo {
 		sc.close();
 
 	}
+	
+	
+	private static void EquipeOuIndividual() {
+		// TODO Auto-generated method stub
+		return;
+	}
+
 
 	private static void jogar(Jogador[] jogadores, Sumula sumula) throws Exception {
 
@@ -130,4 +138,6 @@ public class Jogo {
 		System.out.println("O número de partidas será " + n);
 		return n;
 	}
+	
+	
 }
