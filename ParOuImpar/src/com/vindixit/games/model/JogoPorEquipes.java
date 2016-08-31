@@ -13,10 +13,15 @@ public class JogoPorEquipes implements IJogo {
 	
 	@Override
 	public void informarConcorrentes() {
-		equipes = informarEquipes(2);
+		int qtdMembros = informarQuantidadeMembros();
+		equipes = informarEquipes(2, qtdMembros);
 	}
 
-	private Equipe[] informarEquipes(int numero) {
+	private int informarQuantidadeMembros() {
+		return 0;
+	}
+
+	private Equipe[] informarEquipes(int numero, int qtdMembros) {
 		Equipe[] equipes = new Equipe[numero];
 		for (int i = 0; i < numero; i++) {
 			Equipe equipe = informarEquipe(i + 1);
@@ -44,6 +49,8 @@ public class JogoPorEquipes implements IJogo {
 				sc.next();
 				continue;
 			}
+			
+			
 			break;
 		}
 		return new Equipe(id, nome);
