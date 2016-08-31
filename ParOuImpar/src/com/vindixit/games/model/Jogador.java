@@ -1,6 +1,6 @@
 package com.vindixit.games.model;
 
-public class Jogador {
+public class Jogador implements IConcorrente {
 	private String nome;
 	private int id;
 	private int lancamento;

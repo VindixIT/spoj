@@ -1,18 +1,15 @@
 package com.vindixit.games.model;
 
-public class Equipe {
-	
-	public class equipe {
-		private String nomeEquipe;
-		private int jogadores ;
-		
+public class Equipe implements IConcorrente {
 
+	private String nomeEquipe;
+	private int jogadores;
 
-	public equipe (int jogadores, String nomeEquipe) {
-		
-	    this.nomeEquipe = nomeEquipe;
-	    this.jogadores = jogadores;
-		
+	public Equipe(int jogadores, String nomeEquipe) {
+
+		this.nomeEquipe = nomeEquipe;
+		this.jogadores = jogadores;
+
 	}
 
 	public int getJogadores() {
@@ -22,8 +19,5 @@ public class Equipe {
 	public String getNomeEquipe() {
 		return nomeEquipe;
 	}
-	
-	}
-
 
 }
